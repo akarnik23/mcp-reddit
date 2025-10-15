@@ -157,47 +157,7 @@ def get_subreddit_posts(subreddit: str, limit: int = 10, sort: str = "hot") -> s
     Returns:
         JSON string with subreddit posts data
     """
-    try:
-        limit = min(max(limit, 1), 25)  # Clamp between 1 and 25
-        
-        reddit = get_reddit_instance()
-        subreddit_obj = reddit.subreddit(subreddit)
-        
-        # Get posts based on sort type
-        if sort == "hot":
-            posts = subreddit_obj.hot(limit=limit)
-        elif sort == "new":
-            posts = subreddit_obj.new(limit=limit)
-        elif sort == "top":
-            posts = subreddit_obj.top(limit=limit, time_filter="day")
-        elif sort == "rising":
-            posts = subreddit_obj.rising(limit=limit)
-        else:
-            posts = subreddit_obj.hot(limit=limit)
-        
-        formatted_posts = []
-        for post in posts:
-            formatted_posts.append({
-                "title": post.title,
-                "author": str(post.author) if post.author else "[deleted]",
-                "score": post.score,
-                "upvote_ratio": post.upvote_ratio,
-                "num_comments": post.num_comments,
-                "url": post.url,
-                "permalink": f"https://reddit.com{post.permalink}",
-                "created_utc": post.created_utc,
-                "selftext": post.selftext,
-                "subreddit": str(post.subreddit),
-                "is_self": post.is_self,
-                "over_18": post.over_18,
-                "stickied": post.stickied,
-                "locked": post.locked
-            })
-        
-        return json.dumps(formatted_posts, indent=2)
-        
-    except Exception as e:
-        return json.dumps({"error": f"Error fetching subreddit posts: {str(e)}"}, indent=2)
+    return get_subreddit_posts_http(subreddit, limit, sort)
 
 @mcp.tool()
 def search_reddit(query: str, limit: int = 10, sort: str = "relevance") -> str:
@@ -211,37 +171,7 @@ def search_reddit(query: str, limit: int = 10, sort: str = "relevance") -> str:
     Returns:
         JSON string with search results
     """
-    try:
-        limit = min(max(limit, 1), 25)  # Clamp between 1 and 25
-        
-        reddit = get_reddit_instance()
-        
-        # Search across all of Reddit
-        search_results = reddit.subreddit("all").search(query, limit=limit, sort=sort)
-        
-        formatted_posts = []
-        for post in search_results:
-            formatted_posts.append({
-                "title": post.title,
-                "author": str(post.author) if post.author else "[deleted]",
-                "score": post.score,
-                "upvote_ratio": post.upvote_ratio,
-                "num_comments": post.num_comments,
-                "url": post.url,
-                "permalink": f"https://reddit.com{post.permalink}",
-                "created_utc": post.created_utc,
-                "selftext": post.selftext,
-                "subreddit": str(post.subreddit),
-                "is_self": post.is_self,
-                "over_18": post.over_18,
-                "stickied": post.stickied,
-                "locked": post.locked
-            })
-        
-        return json.dumps(formatted_posts, indent=2)
-        
-    except Exception as e:
-        return json.dumps({"error": f"Error searching Reddit: {str(e)}"}, indent=2)
+    return search_reddit_http(query, limit, sort)
 
 @mcp.tool()
 def get_user_posts(username: str, limit: int = 10, sort: str = "new") -> str:
@@ -255,38 +185,7 @@ def get_user_posts(username: str, limit: int = 10, sort: str = "new") -> str:
     Returns:
         JSON string with user posts data
     """
-    try:
-        limit = min(max(limit, 1), 25)  # Clamp between 1 and 25
-        
-        reddit = get_reddit_instance()
-        user = reddit.redditor(username)
-        
-        # Get user's submitted posts
-        posts = user.submissions.new(limit=limit)
-        
-        formatted_posts = []
-        for post in posts:
-            formatted_posts.append({
-                "title": post.title,
-                "author": str(post.author) if post.author else "[deleted]",
-                "score": post.score,
-                "upvote_ratio": post.upvote_ratio,
-                "num_comments": post.num_comments,
-                "url": post.url,
-                "permalink": f"https://reddit.com{post.permalink}",
-                "created_utc": post.created_utc,
-                "selftext": post.selftext,
-                "subreddit": str(post.subreddit),
-                "is_self": post.is_self,
-                "over_18": post.over_18,
-                "stickied": post.stickied,
-                "locked": post.locked
-            })
-        
-        return json.dumps(formatted_posts, indent=2)
-        
-    except Exception as e:
-        return json.dumps({"error": f"Error fetching user posts: {str(e)}"}, indent=2)
+    return get_user_posts_http(username, limit, sort)
 
 if __name__ == "__main__":
     # Run in HTTP mode for testing
