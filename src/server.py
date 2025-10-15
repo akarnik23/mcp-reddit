@@ -25,16 +25,20 @@ def get_subreddit_posts_http(subreddit: str, limit: int = 10, sort: str = "hot")
         limit = min(max(limit, 1), 25)  # Clamp between 1 and 25 (Reddit's limit)
         
         # Reddit returns JSON if you add .json
-        url = f"{REDDIT_API_BASE}/r/{subreddit}/{sort}.json?limit={limit}"
+        url = f"{REDDIT_API_BASE}/r/{subreddit}/{sort}.json?limit={limit}&raw_json=1"
         
         headers = {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+            "User-Agent": "RedditMCP/1.0 by u/redditmcp",
+            "Accept": "application/json",
+            "Accept-Language": "en-US,en;q=0.9",
+            "Cache-Control": "no-cache",
+            "Pragma": "no-cache"
         }
         
         # Add small delay to be respectful of rate limits
-        time.sleep(0.5)
+        time.sleep(1.0)
         
-        response = httpx.get(url, headers=headers, timeout=10.0)
+        response = httpx.get(url, headers=headers, timeout=15.0)
         response.raise_for_status()
         data = response.json()
         
@@ -73,14 +77,22 @@ def search_reddit_http(query: str, limit: int = 10, sort: str = "relevance") -> 
         params = {
             "q": query,
             "limit": limit,
-            "sort": sort
+            "sort": sort,
+            "raw_json": 1
         }
         
         headers = {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+            "User-Agent": "RedditMCP/1.0 by u/redditmcp",
+            "Accept": "application/json",
+            "Accept-Language": "en-US,en;q=0.9",
+            "Cache-Control": "no-cache",
+            "Pragma": "no-cache"
         }
         
-        response = httpx.get(url, headers=headers, params=params, timeout=10.0)
+        # Add small delay to be respectful of rate limits
+        time.sleep(1.0)
+        
+        response = httpx.get(url, headers=headers, params=params, timeout=15.0)
         response.raise_for_status()
         data = response.json()
         
@@ -115,16 +127,20 @@ def get_user_posts_http(username: str, limit: int = 10, sort: str = "new") -> st
         limit = min(max(limit, 1), 25)  # Clamp between 1 and 25
         
         # Reddit user posts API
-        url = f"{REDDIT_API_BASE}/u/{username}/submitted.json?limit={limit}&sort={sort}"
+        url = f"{REDDIT_API_BASE}/u/{username}/submitted.json?limit={limit}&sort={sort}&raw_json=1"
         
         headers = {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+            "User-Agent": "RedditMCP/1.0 by u/redditmcp",
+            "Accept": "application/json",
+            "Accept-Language": "en-US,en;q=0.9",
+            "Cache-Control": "no-cache",
+            "Pragma": "no-cache"
         }
         
         # Add small delay to be respectful of rate limits
-        time.sleep(0.5)
+        time.sleep(1.0)
         
-        response = httpx.get(url, headers=headers, timeout=10.0)
+        response = httpx.get(url, headers=headers, timeout=15.0)
         response.raise_for_status()
         data = response.json()
         
@@ -169,16 +185,20 @@ def get_subreddit_posts(subreddit: str, limit: int = 10, sort: str = "hot") -> s
         limit = min(max(limit, 1), 25)  # Clamp between 1 and 25
         
         # Reddit returns JSON if you add .json
-        url = f"{REDDIT_API_BASE}/r/{subreddit}/{sort}.json?limit={limit}"
+        url = f"{REDDIT_API_BASE}/r/{subreddit}/{sort}.json?limit={limit}&raw_json=1"
         
         headers = {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+            "User-Agent": "RedditMCP/1.0 by u/redditmcp",
+            "Accept": "application/json",
+            "Accept-Language": "en-US,en;q=0.9",
+            "Cache-Control": "no-cache",
+            "Pragma": "no-cache"
         }
         
         # Add small delay to be respectful of rate limits
-        time.sleep(0.5)
+        time.sleep(1.0)
         
-        response = httpx.get(url, headers=headers, timeout=10.0)
+        response = httpx.get(url, headers=headers, timeout=15.0)
         response.raise_for_status()
         data = response.json()
         
@@ -227,14 +247,22 @@ def search_reddit(query: str, limit: int = 10, sort: str = "relevance") -> str:
         params = {
             "q": query,
             "limit": limit,
-            "sort": sort
+            "sort": sort,
+            "raw_json": 1
         }
         
         headers = {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+            "User-Agent": "RedditMCP/1.0 by u/redditmcp",
+            "Accept": "application/json",
+            "Accept-Language": "en-US,en;q=0.9",
+            "Cache-Control": "no-cache",
+            "Pragma": "no-cache"
         }
         
-        response = httpx.get(url, headers=headers, params=params, timeout=10.0)
+        # Add small delay to be respectful of rate limits
+        time.sleep(1.0)
+        
+        response = httpx.get(url, headers=headers, params=params, timeout=15.0)
         response.raise_for_status()
         data = response.json()
         
@@ -279,16 +307,20 @@ def get_user_posts(username: str, limit: int = 10, sort: str = "new") -> str:
         limit = min(max(limit, 1), 25)  # Clamp between 1 and 25
         
         # Reddit user posts API
-        url = f"{REDDIT_API_BASE}/u/{username}/submitted.json?limit={limit}&sort={sort}"
+        url = f"{REDDIT_API_BASE}/u/{username}/submitted.json?limit={limit}&sort={sort}&raw_json=1"
         
         headers = {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+            "User-Agent": "RedditMCP/1.0 by u/redditmcp",
+            "Accept": "application/json",
+            "Accept-Language": "en-US,en;q=0.9",
+            "Cache-Control": "no-cache",
+            "Pragma": "no-cache"
         }
         
         # Add small delay to be respectful of rate limits
-        time.sleep(0.5)
+        time.sleep(1.0)
         
-        response = httpx.get(url, headers=headers, timeout=10.0)
+        response = httpx.get(url, headers=headers, timeout=15.0)
         response.raise_for_status()
         data = response.json()
         
