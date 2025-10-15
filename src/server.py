@@ -7,6 +7,7 @@ A FastMCP server that provides access to Reddit data and posts.
 import asyncio
 import json
 import os
+import time
 from typing import Any, Dict, List, Optional
 import httpx
 from fastmcp import FastMCP
@@ -27,8 +28,11 @@ def get_subreddit_posts_http(subreddit: str, limit: int = 10, sort: str = "hot")
         url = f"{REDDIT_API_BASE}/r/{subreddit}/{sort}.json?limit={limit}"
         
         headers = {
-            "User-Agent": "Reddit-MCP-Server/1.0"
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
         }
+        
+        # Add small delay to be respectful of rate limits
+        time.sleep(0.5)
         
         response = httpx.get(url, headers=headers, timeout=10.0)
         response.raise_for_status()
@@ -73,7 +77,7 @@ def search_reddit_http(query: str, limit: int = 10, sort: str = "relevance") -> 
         }
         
         headers = {
-            "User-Agent": "Reddit-MCP-Server/1.0"
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
         }
         
         response = httpx.get(url, headers=headers, params=params, timeout=10.0)
@@ -114,8 +118,11 @@ def get_user_posts_http(username: str, limit: int = 10, sort: str = "new") -> st
         url = f"{REDDIT_API_BASE}/u/{username}/submitted.json?limit={limit}&sort={sort}"
         
         headers = {
-            "User-Agent": "Reddit-MCP-Server/1.0"
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
         }
+        
+        # Add small delay to be respectful of rate limits
+        time.sleep(0.5)
         
         response = httpx.get(url, headers=headers, timeout=10.0)
         response.raise_for_status()
@@ -165,8 +172,11 @@ def get_subreddit_posts(subreddit: str, limit: int = 10, sort: str = "hot") -> s
         url = f"{REDDIT_API_BASE}/r/{subreddit}/{sort}.json?limit={limit}"
         
         headers = {
-            "User-Agent": "Reddit-MCP-Server/1.0"
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
         }
+        
+        # Add small delay to be respectful of rate limits
+        time.sleep(0.5)
         
         response = httpx.get(url, headers=headers, timeout=10.0)
         response.raise_for_status()
@@ -221,7 +231,7 @@ def search_reddit(query: str, limit: int = 10, sort: str = "relevance") -> str:
         }
         
         headers = {
-            "User-Agent": "Reddit-MCP-Server/1.0"
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
         }
         
         response = httpx.get(url, headers=headers, params=params, timeout=10.0)
@@ -272,8 +282,11 @@ def get_user_posts(username: str, limit: int = 10, sort: str = "new") -> str:
         url = f"{REDDIT_API_BASE}/u/{username}/submitted.json?limit={limit}&sort={sort}"
         
         headers = {
-            "User-Agent": "Reddit-MCP-Server/1.0"
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
         }
+        
+        # Add small delay to be respectful of rate limits
+        time.sleep(0.5)
         
         response = httpx.get(url, headers=headers, timeout=10.0)
         response.raise_for_status()
