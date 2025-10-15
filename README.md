@@ -8,11 +8,29 @@ A FastMCP server that provides access to Reddit data and posts for Poke integrat
 - **search_reddit**: Search all of Reddit
 - **get_user_posts**: Get posts from a specific Reddit user
 
+## 🔑 Reddit API Setup
+
+This server requires Reddit API credentials:
+
+1. Go to [Reddit App Preferences](https://www.reddit.com/prefs/apps)
+2. Click "Create App" or "Create Another App"
+3. Choose "script" as the app type
+4. Note down your `client_id` and `client_secret`
+5. Set environment variables:
+   ```bash
+   export REDDIT_CLIENT_ID=your_client_id
+   export REDDIT_CLIENT_SECRET=your_client_secret
+   ```
+
 ## 🛠️ Local Development
 
 ```bash
 # Install dependencies
 pip install -r requirements.txt
+
+# Set Reddit API credentials
+export REDDIT_CLIENT_ID=your_client_id
+export REDDIT_CLIENT_SECRET=your_client_secret
 
 # Run the server
 python src/server.py
